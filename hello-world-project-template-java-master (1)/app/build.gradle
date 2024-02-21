@@ -1,0 +1,44 @@
+plugins {
+    // Apply the java plugin to add support for Java
+    id 'java'
+
+    // Apply the application plugin to add support for building a CLI application.
+    id 'application'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+repositories {
+    mavenCentral()
+}
+
+// @@@SNIPSTART hello-world-project-template-java-gradle-dependencies
+dependencies {
+    implementation group: 'io.temporal', name: 'temporal-sdk', version: '1.18.2'
+    implementation group: 'org.slf4j',  name: 'slf4j-nop', version: '2.0.6'
+    
+    testImplementation group: 'io.temporal', name: 'temporal-testing', version: '1.18.2'
+    testImplementation group: 'junit', name: 'junit', version: '4.13.2'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '5.1.1'
+}
+// @@@SNIPEND
+
+application {
+    // Define the main class for the application.
+    mainClass = 'helloworldapp.InitiateHelloWorld'
+}
+
+// @@@SNIPSTART hello-world-project-template-java-gradle-tasks
+task sayHello(type: JavaExec) {
+    mainClass = 'helloworldapp.InitiateHelloWorld'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task startWorker(type: JavaExec) {
+    mainClass = 'helloworldapp.HelloWorldWorker'
+    classpath = sourceSets.main.runtimeClasspath
+}
+// @@@SNIPEND
